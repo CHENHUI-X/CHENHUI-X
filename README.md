@@ -17,7 +17,7 @@
 
 <p align="center"><img  width="600em"  src="https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&theme=synthwave" alt="CHENHUI-X :: Profile Stats" /></p>
 
-<p align="center"><img width="600em"   src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=10&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p> |
+<p align="center"><img width="600em"   src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=10&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p> 
  
 
 
