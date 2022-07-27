@@ -8,12 +8,7 @@
 
 |  👋 Hi there     |                       💻 Repositories                   |
 |  --------------  |                           :----:                         |
-| ⭐️ I am Chenhui, currently a student.<br> ⭐ In my spare time, I enjoy reading, usually like to read some algorithm <br>content, including machine learning, deep learning, artificial intelligence, etc. <br>⭐️ Of course, I also like programming and try new things. <br>⭐️ [My Bilibili homepage](https://space.bilibili.com/294132471) Here, I share the algorithms and programs <br>I usually learn, I hope you like it.  | * [ My-lecture-slides-and-code ]( https://github.com/CHENHUI-X/My-lecture-slides-and-code )
-<br> * [meta-learning-lstm-pytorch]( https://github.com/CHENHUI-X/meta-learning-lstm-pytorch )
-<br> * [cycleGAN-simple]( https://github.com/CHENHUI-X/cycleGAN-simple )
-<br> * [Resnet-from-scratch]( https://github.com/CHENHUI-X/Resnet-from-scratch )
-<br> * [yolo-v3-simple]( https://github.com/CHENHUI-X/yolo-v3-simple)
-<br> * [https://github.com/CHENHUI-X/yolo-v3-simple](https://github.com/CHENHUI-X/ImageClassification_with_VGGAttention)  |
+| ⭐️ I am Chenhui, currently a student.<br> ⭐ In my spare time, I enjoy reading, usually like to read some algorithm <br>content, including machine learning, deep learning, artificial intelligence, etc. <br>⭐️ Of course, I also like programming and try new things. <br>⭐️ [My Bilibili homepage](https://space.bilibili.com/294132471) Here, I share the algorithms and programs <br>I usually learn, I hope you like it.  | * [ My-lecture-slides-and-code ]( https://github.com/CHENHUI-X/My-lecture-slides-and-code )<br>  [meta-learning-lstm-pytorch]( https://github.com/CHENHUI-X/meta-learning-lstm-pytorch )<br>  [cycleGAN-simple]( https://github.com/CHENHUI-X/cycleGAN-simple )<br> *[Resnet-from-scratch]( https://github.com/CHENHUI-X/Resnet-from-scratch )<br>  [yolo-v3-simple]( https://github.com/CHENHUI-X/yolo-v3-simple)<br>  [ImageClassification_with_VGGAttention](https://github.com/CHENHUI-X/ImageClassification_with_VGGAttention)  |
 
 
 
