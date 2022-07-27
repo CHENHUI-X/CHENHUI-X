@@ -13,7 +13,4 @@
 
  <h4 align="left">Top langs :tongue:</h4><h4 align="right">Profile stats :musical_keyboard:</h4>
 
-<p align="left"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=10&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p>
-
-
-|<p align="right"><img src="https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&theme=synthwave" alt="CHENHUI-X :: Profile Stats" /></p> 
+<p align="left"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=10&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p><p align="right"><img src="https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&theme=synthwave" alt="CHENHUI-X :: Profile Stats" /></p> 
