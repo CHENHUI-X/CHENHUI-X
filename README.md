@@ -12,7 +12,7 @@
 
 |  <h4 align="center">Profile stats :musical_keyboard:</h4>   |  <h4 align="center">Top langs :tongue:</h4>  |
 |  --------------  |                            ----                          |
-| <p align="center"><img height="180em" width ="500em" src="https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&theme=synthwave" alt="CHENHUI-X :: Profile Stats" /></p> | <p align="center"><img height="180em" width ="300em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=10&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p> |
+| <p align="center"><img height="180em" width ="550em" src="https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&theme=synthwave" alt="CHENHUI-X :: Profile Stats" /></p> | <p align="center"><img height="180em" width ="300em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=10&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p> |
  
 
 
