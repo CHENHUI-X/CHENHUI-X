@@ -4,7 +4,9 @@
 <p align="center"><img src="https://profile-counter.glitch.me/{CHENHUI-X}/count.svg" alt="CHENHUI-X :: Visitor's Count" /></p>  
 <br>
 
-![Metrics](https://metrics.lecoq.io/CHENHUI-X?template=classic&isocalendar=1&topics=1&habits=1&projects=1&base.indepth=false&base.hireable=false&isocalendar.duration=half-year&topics.mode=starred&topics.sort=stars&topics.limit=15&habits.from=200&habits.days=14&habits.facts=true&habits.charts=false&habits.charts.type=classic&habits.trim=false&habits.languages.limit=8&projects.limit=4&projects.descriptions=false&config.timezone=Asia%2FShanghai)
+![Metrics](https://metrics.lecoq.io/CHENHUI-X?template=classic&base.header=0&isocalendar=1&topics=1&habits=1&activity=1&base.indepth=false&base.hireable=false&isocalendar.duration=half-year&topics.mode=starred&topics.sort=stars&topics.limit=15&habits.from=200&habits.days=14&habits.facts=true&habits.charts=false&habits.charts.type=classic&habits.trim=false&habits.languages.limit=8&activity.limit=5&activity.load=300&activity.days=14&activity.visibility=all&activity.timestamps=false&activity.filter=all&config.timezone=Asia%2FShanghai)
+
+
 
 ---
 
