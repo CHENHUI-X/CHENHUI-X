@@ -16,11 +16,6 @@
 
 |  <h4 align="center">  :musical_keyboard:Profile stats  </h4>   |  <h4 align="center"> :rocket: Top langs</h4>  |
 |  --------------  |                            ----                          |
-| <p align="center"><img  width="470em"  src="https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&theme=synthwave" alt="CHENHUI-X :: Profile Stats" /></p> | <p align="center"><img width="300em"   src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=10&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p> |
+| <p align="center"><img  width="470em"  src="https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&theme=cobalt" alt="CHENHUI-X :: Profile Stats" /></p> | <p align="center"><img width="300em"   src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=10&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p> |
  
-
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&theme=cobalt)
- 
-
-
 
