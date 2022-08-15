@@ -19,4 +19,4 @@
 | <p align="center"><img  width="470em"  src="https://github-readme-stats.vercel.app/api?username=CHENHUI-X&show_icons=true&hide=contribs,prs&cache_seconds=86400&theme=aura_dark" alt="CHENHUI-X :: Profile Stats" /></p> | <p align="center"><img width="300em"   src="https://github-readme-stats.vercel.app/api/top-langs/?username=CHENHUI-X&langs_count=12&theme=tokyonight&layout=compact" alt="CHENHUI-X" /></p> |
  
 
-https://github-readme-stats.vercel.app/api/pin/?username=CHENHUI-X&repo=github-readme-stats&cache_seconds=86400&theme=maroongold
+[maroongold_repo]:https://github-readme-stats.vercel.app/api/pin/?username=CHENHUI-X&repo=github-readme-stats&cache_seconds=86400&theme=maroongold
