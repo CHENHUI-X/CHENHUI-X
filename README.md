@@ -3,7 +3,9 @@
 
 <p align="center"><img src="https://profile-counter.glitch.me/{CHENHUI-X}/count.svg" alt="CHENHUI-X :: Visitor's Count" /></p>  
 <br>
+
 ![Metrics](https://github.com/CHENHUI-X/CHENHUI-X/blob/main/github-metrics.svg)
+
 ---
 
 
