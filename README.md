@@ -4,7 +4,6 @@
 <p align="center"><img src="https://profile-counter.glitch.me/{CHENHUI-X}/count.svg" alt="CHENHUI-X :: Visitor's Count" /></p>  
 <br>
 
-![Metrics](https://metrics.lecoq.io/CHENHUI-X?template=classic&base.indepth=false&base.hireable=false&config.timezone=Asia%2FShanghai)
 
 
 ---
