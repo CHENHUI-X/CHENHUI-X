@@ -1,5 +1,5 @@
 
-<h4 align="center">Visitor's count :eyes:</h4>
+<h4 align="left">Visitor's count :eyes:</h4>
 
 <p align="center"><img src="https://profile-counter.glitch.me/{CHENHUI-X}/count.svg" alt="CHENHUI-X :: Visitor's Count" /></p>  
 <br>
