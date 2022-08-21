@@ -9,7 +9,7 @@
 
 |                         👋 Hi there                     |
 |                              ---                         | 
-| ⭐️ I am Chenhui, currently a student.<br> ⭐ In my spare time, I  usually like to read some algorithm <br> content, including machine learning, deep learning, AI, etc. <br>⭐️ Of course, I also like programming and try new things. <br>⭐️ [My Bilibili homepage](https://space.bilibili.com/294132471) Here, I share the algorithms and <br>programs I usually learn, I hope you like it.  |
+| ⭐️ I am Chenhui, currently a student.<br> ⭐ In my spare time, I  usually like to read some algorithm content, including machine learning, deep learning, AI, etc. <br>⭐️ Of course, I also like programming and try new things. <br>⭐️ [My Bilibili homepage](https://space.bilibili.com/294132471) Here, I share the algorithms and programs I usually learn, I hope you like it.  |
 
 |                       💻 Repositories                   |
 |                            ----                          |
