@@ -94,7 +94,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
                                 <path fill-rule="evenodd" d="M2.75 2.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h2a.75.75 0 01.75.75v2.19l2.72-2.72a.75.75 0 01.53-.22h4.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25H2.75zM1 2.75C1 1.784 1.784 1 2.75 1h10.5c.966 0 1.75.784 1.75 1.75v7.5A1.75 1.75 0 0113.25 12H9.06l-2.573 2.573A1.457 1.457 0 014 13.543V12H2.75A1.75 1.75 0 011 10.25v-7.5z"/>
                             </svg>
-                            12 issue comments
+                            13 issue comments
                         </div>
                     </section>
                     <section>
@@ -1328,12 +1328,18 @@
                                     </svg>
                                     <div class="content">
                                         Commented on
-                                        <span class="issue">#3115 [求助]： 求求可以告诉我在ubuntu 22.04 下开启了 clash的TUN模式，那么TUN模式采用的协议栈 stack 如何正确设置成system</span>
+                                        <span class="issue">#3048 [Bug]: Ubuntu 20.04 一打开TUN模式就上不了网，内网外网都上不了。</span>
                                     </div>
                                 </div>
                                 <div class="details">
-                                    <div>opened by WSYwsy22 in <span class="repo">Fndroid/clash_for_windows_pkg</span></div>
-                                    <div class="comment">大佬，linux下的tun到底怎么开呀，我看官网的教程，直接点击tun manager 下载没反应，然后按照官网的tip下载了Clash Premiun ，也安教程输入了命令， 但是接下来我不知道怎么做了</div>
+                                    <div>opened by DoctorXK in <span class="repo">Fndroid/clash_for_windows_pkg</span></div>
+                                    <div class="comment">
+                                        <i>
+                                            <i>大佬，linux下的tun到底怎么开呀，我看官网的教程，直接点击tun manager 下载没反应，然后按照官网的tip下载了Clash Premiun ，也安教材输入了命令， 但是接下来我不知道怎么做了</i>
+                                            正常来说要root权限
+                                        </i>
+                                        我有呀，不是服务器的，我的是本机双系统，就是按照教程也安装了Clash Premiun Core ，但是不知道下一步干什么。
+                                    </div>
                                 </div>
                             </section>
                         </div>
@@ -1345,12 +1351,12 @@
                                     </svg>
                                     <div class="content">
                                         Commented on
-                                        <span class="issue">#2836 [Bug]: 打开Start with Linux，重启后无法使用TUN，端口也被占用</span>
+                                        <span class="issue">#3115 [求助]： 求求可以告诉我在ubuntu 22.04 下开启了 clash的TUN模式，那么TUN模式采用的协议栈 stack 如何正确设置成system</span>
                                     </div>
                                 </div>
                                 <div class="details">
-                                    <div>opened by picharsiu in <span class="repo">Fndroid/clash_for_windows_pkg</span></div>
-                                    <div class="comment">大佬，linux下的tun到底怎么开呀，我看官网的教程，直接点击tun manager 下载没反应，然后按照官网的tip下载了Clash Premiun ，也安教材输入了命令， 但是接下来我不知道怎么做了</div>
+                                    <div>opened by WSYwsy22 in <span class="repo">Fndroid/clash_for_windows_pkg</span></div>
+                                    <div class="comment">大佬，linux下的tun到底怎么开呀，我看官网的教程，直接点击tun manager 下载没反应，然后按照官网的tip下载了Clash Premiun ，也安教程输入了命令， 但是接下来我不知道怎么做了</div>
                                 </div>
                             </section>
                         </div>
@@ -1359,7 +1365,7 @@
             </section>
             <footer>
                 <span>These metrics do not include all private contributions</span>
-                <span>Last updated 6 Sept 2022, 09:46:24 (timezone Asia/Shanghai) with lowlighter/metrics@3.27.0</span>
+                <span>Last updated 6 Sept 2022, 12:20:59 (timezone Asia/Shanghai) with lowlighter/metrics@3.27.0</span>
             </footer>
         </div>
         <div xmlns="http://www.w3.org/1999/xhtml" id="metrics-end"></div>
