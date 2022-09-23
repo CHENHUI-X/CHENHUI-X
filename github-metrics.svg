@@ -1306,7 +1306,7 @@
                                     </svg>
                                     <div class="content">
                                         Starred
-                                        <span class="repo">microsoft/LightGBM</span>
+                                        <span class="repo">CHENHUI-X/Deep-Learning-Classic-Papers</span>
                                     </div>
                                 </div>
                             </section>
@@ -1319,7 +1319,7 @@
                                     </svg>
                                     <div class="content">
                                         Starred
-                                        <span class="repo">425776024/nlpcda</span>
+                                        <span class="repo">CHENHUI-X/Deep-Learning-Classic-Papers</span>
                                     </div>
                                 </div>
                             </section>
@@ -1329,7 +1329,7 @@
             </section>
             <footer>
                 <span>These metrics do not include all private contributions</span>
-                <span>Last updated 23 Sept 2022, 09:45:29 (timezone Asia/Shanghai) with lowlighter/metrics@3.28.0</span>
+                <span>Last updated 23 Sept 2022, 12:16:27 (timezone Asia/Shanghai) with lowlighter/metrics@3.28.0</span>
             </footer>
         </div>
         <div xmlns="http://www.w3.org/1999/xhtml" id="metrics-end"></div>
