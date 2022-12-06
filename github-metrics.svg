@@ -1328,7 +1328,7 @@
                                     </svg>
                                     <div class="content">
                                         Starred
-                                        <span class="repo">yitu-opensource/T2T-ViT</span>
+                                        <span class="repo">mlfoundations/open_clip</span>
                                     </div>
                                 </div>
                             </section>
@@ -1341,7 +1341,7 @@
                                     </svg>
                                     <div class="content">
                                         Starred
-                                        <span class="repo">yitu-opensource/T2T-ViT</span>
+                                        <span class="repo">CorentinJ/Real-Time-Voice-Cloning</span>
                                     </div>
                                 </div>
                             </section>
@@ -1351,7 +1351,7 @@
             </section>
             <footer>
                 <span>These metrics do not include all private contributions</span>
-                <span>Last updated 7 Dec 2022, 01:11:50 (timezone Asia/Shanghai) with lowlighter/metrics@3.29.0</span>
+                <span>Last updated 7 Dec 2022, 02:16:14 (timezone Asia/Shanghai) with lowlighter/metrics@3.29.0</span>
             </footer>
         </div>
         <div xmlns="http://www.w3.org/1999/xhtml" id="metrics-end"></div>
