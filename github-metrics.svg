@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="529" class="">
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="526" class="">
     <defs>
         <style/>
     </defs>
@@ -245,7 +245,7 @@
                                 <div class="details">
                                     <div>on branch <span class="code">main</span></div>
                                     <div class="commit">
-                                        <div class="sha">#e59b1f2</div>
+                                        <div class="sha">#5030afe</div>
                                         <div class="message">Update README.md</div>
                                     </div>
                                 </div>
@@ -259,14 +259,14 @@
                                     </svg>
                                     <div class="content">
                                         Pushed 1 commit in
-                                        <span class="repo">CHENHUI-X/CHENHUI-X.github.io</span>
+                                        <span class="repo">CHENHUI-X/CHENHUI-X</span>
                                     </div>
                                 </div>
                                 <div class="details">
                                     <div>on branch <span class="code">main</span></div>
                                     <div class="commit">
-                                        <div class="sha">#1a62e50</div>
-                                        <div class="message">修改背景动画样式 修改text generator blog</div>
+                                        <div class="sha">#e59b1f2</div>
+                                        <div class="message">Update README.md</div>
                                     </div>
                                 </div>
                             </section>
