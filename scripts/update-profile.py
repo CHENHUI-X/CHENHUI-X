@@ -70,13 +70,20 @@ def svg(width, height, title, content, vertical_padding=0):
 '''
 
 
-def profile_card(lines, compact=False):
-    width = 360 if compact else 470
-    height = 86 + len(lines) * 23
+def overview_card(lines, stars, contributions, updated, compact=False):
+    if not compact:
+        code = re.sub(r"(?m)^(\w+=\([^\n]*)\n +([^\n]*\))$", r"\1 \2", "\n".join(lines))
+        lines = code.splitlines()
+    width = 360 if compact else 860
+    code_end = 78 + len(lines) * 20
+    stats_top = code_end + 40 if compact else 32
+    height = stats_top + 214 if compact else code_end + 26
     content = [
-        '<text class="text mono" x="24" y="34" font-size="14" font-weight="600">~$ cat profile.sh</text>',
-        f'<text class="accent mono" x="{width - 24}" y="34" text-anchor="end" font-size="11">bash</text>',
+        '<text class="text mono" x="24" y="32" font-size="14" font-weight="600">~$ cat profile.sh</text>',
+        f'<path d="M24 52H{width - 24}" fill="none" stroke="#8b949e" stroke-opacity="0.3"/>',
     ]
+    if not compact:
+        content.append(f'<path d="M548 52V{height - 24}" fill="none" stroke="#8b949e" stroke-opacity="0.3"/>')
     for i, line in enumerate(lines):
         if line.startswith("#"):
             value = f'<tspan class="muted">{escape(line)}</tspan>'
@@ -85,29 +92,25 @@ def profile_card(lines, compact=False):
             value = f'{escape(name)}=<tspan class="accent">{escape(value)}</tspan>'
         else:
             value = f'<tspan class="accent">{escape(line)}</tspan>'
-        content.append(f'<text class="text mono" x="24" y="{73 + i * 23}" font-size="13" xml:space="preserve">{value}</text>')
-    return svg(width, height, "Chenhui's Shell profile", content, vertical_padding=12)
-
-
-def stats_card(stars, contributions, updated, height):
+        content.append(f'<text class="text mono" x="24" y="{78 + i * 20}" font-size="13" xml:space="preserve">{value}</text>')
     rows = [
         ("Stars · public repos", stars),
         ("Commits", contributions["totalCommitContributions"]),
         ("Pull requests", contributions["totalPullRequestContributions"]),
         ("Issues", contributions["totalIssueContributions"]),
     ]
-    content = [
-        '<text class="text" x="24" y="36" font-size="17" font-weight="600">Chenhui’s GitHub Stats</text>',
-        '<text class="muted mono" x="24" y="58" font-size="11">CHENHUI-X / activity</text>',
-    ]
+    stats_left = 24 if compact else 580
+    if compact:
+        content.append(f'<path d="M24 {code_end + 8}H336" fill="none" stroke="#8b949e" stroke-opacity="0.3"/>')
+    content.append(f'<text class="text mono" x="{stats_left}" y="{stats_top}" font-size="14" font-weight="600">GitHub stats</text>')
     for i, (label, value) in enumerate(rows):
-        x = 24 + (i % 2) * 164
-        y = 128 + (i // 2) * 130
-        content.append(f'<text class="accent" x="{x}" y="{y}" font-size="34" font-weight="600">{value:,}</text>')
-        content.append(f'<text class="muted" x="{x}" y="{y + 26}" font-size="12">{label}</text>')
-    content.append(f'<text class="muted" x="24" y="{height - 42}" font-size="11">Commits, PRs, issues: last 12 months</text>')
-    content.append(f'<text class="muted" x="24" y="{height - 20}" font-size="11">Updated {updated} · GitHub data</text>')
-    return svg(350, height, "Chenhui's GitHub statistics", content, vertical_padding=12)
+        x = stats_left + (i % 2) * 164 if compact else stats_left
+        y = stats_top + 48 + (i // 2) * 76 if compact else 114 + i * ((height - 164) / 4)
+        content.append(f'<text class="accent" x="{x}" y="{y}" font-size="26" font-weight="600">{value:,}</text>')
+        content.append(f'<text class="muted" x="{x}" y="{y + 22}" font-size="12">{label}</text>')
+    content.append(f'<text class="muted" x="{stats_left}" y="{height - 44}" font-size="10">Activity: last 12 months</text>')
+    content.append(f'<text class="muted" x="{stats_left}" y="{height - 24}" font-size="10">Updated {updated}</text>')
+    return svg(width, height, "Chenhui's Shell profile, projects, and GitHub statistics", content)
 
 
 def contribution_chart(calendar, compact=False):
@@ -207,10 +210,8 @@ def main():
     output.mkdir(exist_ok=True)
     readme = (output.parent / "README.md").read_text(encoding="utf-8")
     lines = re.search(r"```bash\n(.*?)```", readme, re.S)[1].strip().splitlines()
-    (output / "profile.svg").write_text(profile_card(lines), encoding="utf-8")
-    (output / "profile-mobile.svg").write_text(profile_card(lines, compact=True), encoding="utf-8")
-    # Project entries can grow without resizing the adjacent statistics card.
-    (output / "stats.svg").write_text(stats_card(stars, contributions, days[-1]["date"], 408), encoding="utf-8")
+    (output / "overview.svg").write_text(overview_card(lines, stars, contributions, days[-1]["date"]), encoding="utf-8")
+    (output / "overview-mobile.svg").write_text(overview_card(lines, stars, contributions, days[-1]["date"], compact=True), encoding="utf-8")
     (output / "contributions.svg").write_text(contribution_chart(calendar), encoding="utf-8")
     (output / "contributions-mobile.svg").write_text(contribution_chart(calendar, compact=True), encoding="utf-8")
     (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")

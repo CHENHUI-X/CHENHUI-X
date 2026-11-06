@@ -10,11 +10,9 @@
 
 <p align="center">
   <picture>
-    <source media="(max-width: 600px)" srcset="./assets/profile-mobile.svg">
-    <img src="./assets/profile.svg" align="top" alt="Chenhui's profile.sh: technical interests and selected projects in one Shell introduction.">
+    <source media="(max-width: 900px)" srcset="./assets/overview-mobile.svg">
+    <img src="./assets/overview.svg" alt="Chenhui's Shell introduction, selected projects, and GitHub statistics in one aligned panel.">
   </picture>
-  &nbsp;
-  <img src="./assets/stats.svg" align="top" alt="Chenhui's GitHub statistics: stars on public repositories, and commits, pull requests, and issues from the last twelve months.">
 </p>
 
 <p align="center">
