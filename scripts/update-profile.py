@@ -2,6 +2,7 @@
 
 import json
 import subprocess
+from collections import Counter
 from datetime import date
 from html import escape
 from pathlib import Path
@@ -12,7 +13,13 @@ query($login: String!, $after: String) {
   user(login: $login) {
     repositories(first: 100, after: $after, ownerAffiliations: OWNER, privacy: PUBLIC) {
       pageInfo { hasNextPage endCursor }
-      nodes { stargazerCount }
+      nodes {
+        stargazerCount
+        isFork
+        languages(first: 100, orderBy: {field: SIZE, direction: DESC}) {
+          edges { size node { name } }
+        }
+      }
     }
     contributionsCollection {
       totalCommitContributions
@@ -47,6 +54,7 @@ def svg(width, height, title, content):
     text{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}}
     .bg{{fill:#ffffff;stroke:#d0d7de}} .text{{fill:#1f2328}}
     .muted{{fill:#656d76}} .accent{{fill:#0969da}}
+    .mono{{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}}
     {palette}
     @media(prefers-color-scheme:dark){{
       .bg{{fill:#0d1117;stroke:#30363d}} .text{{fill:#e6edf3}}
@@ -121,9 +129,36 @@ def contribution_chart(calendar, compact=False):
     return svg(width, height, f"{total} GitHub contributions in the last year", content)
 
 
+def language_chart(languages, compact=False):
+    total = sum(languages.values())
+    rows = languages.most_common(5)
+    other = total - sum(size for _, size in rows)
+    if other:
+        rows.append(("Other", other))
+    width = 430 if compact else 860
+    height = 102 + len(rows) * (54 if compact else 31)
+    content = [
+        '<text class="text" x="24" y="32" font-size="17" font-weight="600">Code languages</text>',
+        '<text class="muted" x="24" y="54" font-size="11">Public, non-fork repositories · by code size</text>',
+    ]
+    for i, (name, size) in enumerate(rows):
+        percent = size / total * 100
+        y = 86 + i * (54 if compact else 31)
+        content.append(f'<text class="text mono" x="24" y="{y}" font-size="13">{escape(name)}</text>')
+        content.append(f'<text class="muted mono" x="{width - 24}" y="{y}" text-anchor="end" font-size="12">{percent:.2f} %</text>')
+        left, top = (24, y + 10) if compact else (245, y - 11)
+        step = 14 if compact else 17
+        for segment in range(27):
+            color = "accent" if (segment + 0.5) / 27 <= size / total else "level-0"
+            content.append(f'<rect class="{color}" x="{left + segment * step}" y="{top}" width="{step - 2}" height="12" rx="1"/>')
+    content.append(f'<text class="muted" x="24" y="{height - 18}" font-size="10">GitHub Linguist · language share across my projects</text>')
+    return svg(width, height, "Code language distribution by size in public, non-fork repositories", content)
+
+
 def main():
     cursor = None
     stars = 0
+    languages = Counter()
     while True:
         request = {"query": QUERY, "variables": {"login": "CHENHUI-X", "after": cursor}}
         response = json.loads(subprocess.check_output(
@@ -134,7 +169,11 @@ def main():
             raise RuntimeError(response["errors"])
         user = response["data"]["user"]
         repositories = user["repositories"]
-        stars += sum(repo["stargazerCount"] for repo in repositories["nodes"])
+        for repo in repositories["nodes"]:
+            stars += repo["stargazerCount"]
+            if not repo["isFork"]:
+                for language in repo["languages"]["edges"]:
+                    languages[language["node"]["name"]] += language["size"]
         if not repositories["pageInfo"]["hasNextPage"]:
             break
         cursor = repositories["pageInfo"]["endCursor"]
@@ -151,7 +190,10 @@ def main():
     (output / "stats-wide.svg").write_text(stats_card(stars, contributions, days[-1]["date"], wide=True), encoding="utf-8")
     (output / "contributions.svg").write_text(contribution_chart(calendar), encoding="utf-8")
     (output / "contributions-mobile.svg").write_text(contribution_chart(calendar, compact=True), encoding="utf-8")
+    (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")
+    (output / "languages-mobile.svg").write_text(language_chart(languages, compact=True), encoding="utf-8")
     print(f"Updated profile: {stars:,} stars, {calendar['totalContributions']:,} contributions")
+    print("Language shares:", ", ".join(f"{name} {size / sum(languages.values()):.2%}" for name, size in languages.most_common(5)))
 
 
 if __name__ == "__main__":

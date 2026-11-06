@@ -44,3 +44,10 @@ website="https://xuchenhui.cc"
   <source media="(max-width: 600px)" srcset="./assets/contributions-mobile.svg">
   <img src="./assets/contributions.svg" width="860" alt="Chenhui's contribution calendar for the last year, using an ice-blue palette. The compact layout shows the same year in two rows.">
 </picture>
+
+### Code languages
+
+<picture>
+  <source media="(max-width: 600px)" srcset="./assets/languages-mobile.svg">
+  <img src="./assets/languages.svg" width="860" alt="Code language distribution across Chenhui's public, non-fork repositories, measured by code size.">
+</picture>

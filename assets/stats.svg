@@ -4,6 +4,7 @@
     text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
     .bg{fill:#ffffff;stroke:#d0d7de} .text{fill:#1f2328}
     .muted{fill:#656d76} .accent{fill:#0969da}
+    .mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
     .level-0{fill:#eff2f5}.level-1{fill:#d5e9ff}.level-2{fill:#9acbff}.level-3{fill:#58a6ff}.level-4{fill:#0969da}
     @media(prefers-color-scheme:dark){
       .bg{fill:#0d1117;stroke:#30363d} .text{fill:#e6edf3}
