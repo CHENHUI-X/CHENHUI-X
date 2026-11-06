@@ -1,7 +1,6 @@
 """Generate profile images from GitHub data using Python and the GitHub CLI."""
 
 import json
-import re
 import subprocess
 from collections import Counter
 from datetime import date
@@ -38,6 +37,9 @@ COLORS = {
     "dark": ["#161b22", "#122c46", "#1b4b78", "#2f81c8", "#58a6ff"],
 }
 
+CARD_WIDTH = 420
+CARD_HEIGHT = 195 * CARD_WIDTH / 467
+
 
 def svg(width, height, title, content, vertical_padding=0):
     canvas_height = height + 2 * vertical_padding
@@ -67,20 +69,11 @@ def svg(width, height, title, content, vertical_padding=0):
 '''
 
 
-def overview_card(lines, compact=False):
-    if not compact:
-        code = re.sub(r"(?m)^(\w+=\([^\n]*)\n +([^\n]*\))$", r"\1 \2", "\n".join(lines))
-        lines = code.splitlines()
-    width = 360 if compact else 860
-    code_end = 78 + len(lines) * 20
-    tools_top = code_end + 40 if compact else 32
-    height = tools_top + 230 if compact else code_end + 26
-    content = [
-        '<text class="text mono" x="24" y="32" font-size="14" font-weight="600">~$ cat profile.sh</text>',
-        f'<path d="M24 52H{width - 24}" fill="none" stroke="#8b949e" stroke-opacity="0.3"/>',
-    ]
-    if not compact:
-        content.append(f'<path d="M548 52V{height - 24}" fill="none" stroke="#8b949e" stroke-opacity="0.3"/>')
+def intro_card(lines, dark=False):
+    # Match the original 467 × 195 stats card displayed at 420px wide.
+    if len(lines) > 10:
+        raise ValueError("Keep profile.sh within 10 lines so the paired cards stay aligned")
+    content = []
     for i, line in enumerate(lines):
         if line.startswith("#"):
             value = f'<tspan class="muted">{escape(line)}</tspan>'
@@ -89,31 +82,34 @@ def overview_card(lines, compact=False):
             value = f'{escape(name)}=<tspan class="accent">{escape(value)}</tspan>'
         else:
             value = f'<tspan class="accent">{escape(line)}</tspan>'
-        content.append(f'<text class="text mono" x="24" y="{78 + i * 20}" font-size="13" xml:space="preserve">{value}</text>')
-    tools = [
-        ("python", "Python", None),
-        ("bash", "Shell", None),
-        ("linux", "Linux", None),
-        ("docker", "Docker", "#2496ed"),
-        ("nginx", "nginx", "#009639"),
-        ("markdown", "Markdown", None),
-    ]
-    tools_left = 24 if compact else 580
-    if compact:
-        content.append(f'<path d="M24 {code_end + 8}H336" fill="none" stroke="#8b949e" stroke-opacity="0.3"/>')
-    content.append(f'<text class="text mono" x="{tools_left}" y="{tools_top}" font-size="14" font-weight="600">Everyday tools</text>')
-    icon_directory = Path(__file__).resolve().parents[1] / "assets" / "icons"
-    for i, (name, label, color) in enumerate(tools):
-        center = 76 + (i % 3) * 104 if compact else 640 + (i % 2) * 128
-        top = tools_top + 30 + (i // 3) * 96 if compact else 100 + (i // 2) * 130
-        icon = ElementTree.fromstring((icon_directory / f"{name}.svg").read_text(encoding="utf-8"))
-        if color:
-            icon.set("fill", color)
-        icon.attrib.update({"x": str(center - 23), "y": str(top + 7), "width": "46", "height": "46"})
-        content.append(f'<rect x="{center - 30}" y="{top}" width="60" height="60" rx="13" fill="#f6f8fa"/>')
-        content.append(ElementTree.tostring(icon, encoding="unicode"))
-        content.append(f'<text class="text mono" x="{center}" y="{top + 82}" text-anchor="middle" font-size="12">{label}</text>')
-    return svg(width, height, "Chenhui's Shell profile, projects, and everyday tools", content)
+        content.append(f'<text class="text" x="16" y="{25 + i * 15}" xml:space="preserve">{value}</text>')
+    background, foreground, muted, accent = (
+        ("#161b22", "#e6edf3", "#8b949e", "#79c0ff") if dark
+        else ("#f6f8fa", "#1f2328", "#6e7781", "#0550ae")
+    )
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" class="intro-code" width="{CARD_WIDTH}" height="{CARD_HEIGHT}" viewBox="0 0 {CARD_WIDTH} {CARD_HEIGHT}" role="img" aria-labelledby="title">
+  <title id="title">Chenhui's Shell introduction and selected projects</title>
+  <style>
+    .intro-code text{{font:12px Menlo,Monaco,Consolas,monospace}}
+    .intro-code .bg{{fill:{background}}} .intro-code .text{{fill:{foreground}}} .intro-code .muted{{fill:{muted}}} .intro-code .accent{{fill:{accent}}}
+  </style>
+  <rect class="bg" width="{CARD_WIDTH}" height="{CARD_HEIGHT}" rx="6"/>
+  {''.join(content)}
+</svg>
+'''
+
+
+def profile_row(intro, stats, compact=False):
+    item_width = 430 if compact else CARD_WIDTH
+    item_height = CARD_HEIGHT * item_width / CARD_WIDTH
+    width = item_width if compact else 2 * item_width + 20
+    height = 2 * item_height + 20 if compact else item_height
+    items = [(intro, 0, 0, CARD_WIDTH), (stats, 0 if compact else item_width + 20, item_height + 20 if compact else 0, 467)]
+    panels = []
+    # Keep the provider's SVG inline so its reveal animations run.
+    for original, x, y, original_width in items:
+        panels.append(f'<g transform="translate({x},{y}) scale({item_width / original_width})">{original.decode("utf-8")}</g>')
+    return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img"><title>Chenhui: Shell introduction and original GitHub Readme Stats</title>{"".join(panels)}</svg>\n'
 
 
 def contribution_chart(calendar, compact=False):
@@ -210,8 +206,6 @@ def main():
     output = Path(__file__).resolve().parents[1] / "assets"
     output.mkdir(exist_ok=True)
     lines = (output.parent / "profile.sh").read_text(encoding="utf-8").strip().splitlines()
-    (output / "overview.svg").write_text(overview_card(lines), encoding="utf-8")
-    (output / "overview-mobile.svg").write_text(overview_card(lines, compact=True), encoding="utf-8")
     # Cache the original card so transient service failures do not break the profile.
     for theme, filename in [("default", "github-stats.svg"), ("dark", "github-stats-dark.svg")]:
         url = f"https://github-readme-stats-ouuan.vercel.app/api?username=CHENHUI-X&show_icons=true&theme={theme}"
@@ -225,6 +219,10 @@ def main():
         if "CHENHUI" not in text.upper() or "Total Stars Earned:" not in text:
             raise ValueError("GitHub Readme Stats did not return this profile's card")
         (output / filename).write_bytes(card)
+        intro = intro_card(lines, dark=theme == "dark").encode("utf-8")
+        for compact in [False, True]:
+            suffix = ("-mobile" if compact else "") + ("-dark" if theme == "dark" else "")
+            (output / f"profile-row{suffix}.svg").write_text(profile_row(intro, card, compact=compact), encoding="utf-8")
     (output / "contributions.svg").write_text(contribution_chart(calendar), encoding="utf-8")
     (output / "contributions-mobile.svg").write_text(contribution_chart(calendar, compact=True), encoding="utf-8")
     (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")
