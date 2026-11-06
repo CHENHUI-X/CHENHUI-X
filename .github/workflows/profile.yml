@@ -9,6 +9,7 @@ on:
     paths:
       - README.md
       - scripts/update-profile.py
+      - assets/icons/**
       - .github/workflows/profile.yml
 
 permissions:

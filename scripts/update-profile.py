@@ -7,6 +7,7 @@ from collections import Counter
 from datetime import date
 from html import escape
 from pathlib import Path
+from xml.etree import ElementTree
 
 
 QUERY = """
@@ -15,7 +16,6 @@ query($login: String!, $after: String) {
     repositories(first: 100, after: $after, ownerAffiliations: OWNER, privacy: PUBLIC) {
       pageInfo { hasNextPage endCursor }
       nodes {
-        stargazerCount
         isFork
         languages(first: 100, orderBy: {field: SIZE, direction: DESC}) {
           edges { size node { name } }
@@ -23,9 +23,6 @@ query($login: String!, $after: String) {
       }
     }
     contributionsCollection {
-      totalCommitContributions
-      totalPullRequestContributions
-      totalIssueContributions
       contributionCalendar {
         totalContributions
         weeks { contributionDays { date contributionCount contributionLevel } }
@@ -70,14 +67,14 @@ def svg(width, height, title, content, vertical_padding=0):
 '''
 
 
-def overview_card(lines, stars, contributions, updated, compact=False):
+def overview_card(lines, compact=False):
     if not compact:
         code = re.sub(r"(?m)^(\w+=\([^\n]*)\n +([^\n]*\))$", r"\1 \2", "\n".join(lines))
         lines = code.splitlines()
     width = 360 if compact else 860
     code_end = 78 + len(lines) * 20
-    stats_top = code_end + 40 if compact else 32
-    height = stats_top + 214 if compact else code_end + 26
+    tools_top = code_end + 40 if compact else 32
+    height = tools_top + 230 if compact else code_end + 26
     content = [
         '<text class="text mono" x="24" y="32" font-size="14" font-weight="600">~$ cat profile.sh</text>',
         f'<path d="M24 52H{width - 24}" fill="none" stroke="#8b949e" stroke-opacity="0.3"/>',
@@ -93,24 +90,30 @@ def overview_card(lines, stars, contributions, updated, compact=False):
         else:
             value = f'<tspan class="accent">{escape(line)}</tspan>'
         content.append(f'<text class="text mono" x="24" y="{78 + i * 20}" font-size="13" xml:space="preserve">{value}</text>')
-    rows = [
-        ("Stars · public repos", stars),
-        ("Commits", contributions["totalCommitContributions"]),
-        ("Pull requests", contributions["totalPullRequestContributions"]),
-        ("Issues", contributions["totalIssueContributions"]),
+    tools = [
+        ("python", "Python", None),
+        ("bash", "Shell", None),
+        ("linux", "Linux", None),
+        ("docker", "Docker", "#2496ed"),
+        ("nginx", "nginx", "#009639"),
+        ("markdown", "Markdown", None),
     ]
-    stats_left = 24 if compact else 580
+    tools_left = 24 if compact else 580
     if compact:
         content.append(f'<path d="M24 {code_end + 8}H336" fill="none" stroke="#8b949e" stroke-opacity="0.3"/>')
-    content.append(f'<text class="text mono" x="{stats_left}" y="{stats_top}" font-size="14" font-weight="600">GitHub stats</text>')
-    for i, (label, value) in enumerate(rows):
-        x = stats_left + (i % 2) * 164 if compact else stats_left
-        y = stats_top + 48 + (i // 2) * 76 if compact else 114 + i * ((height - 164) / 4)
-        content.append(f'<text class="accent" x="{x}" y="{y}" font-size="26" font-weight="600">{value:,}</text>')
-        content.append(f'<text class="muted" x="{x}" y="{y + 22}" font-size="12">{label}</text>')
-    content.append(f'<text class="muted" x="{stats_left}" y="{height - 44}" font-size="10">Activity: last 12 months</text>')
-    content.append(f'<text class="muted" x="{stats_left}" y="{height - 24}" font-size="10">Updated {updated}</text>')
-    return svg(width, height, "Chenhui's Shell profile, projects, and GitHub statistics", content)
+    content.append(f'<text class="text mono" x="{tools_left}" y="{tools_top}" font-size="14" font-weight="600">Everyday tools</text>')
+    icon_directory = Path(__file__).resolve().parents[1] / "assets" / "icons"
+    for i, (name, label, color) in enumerate(tools):
+        center = 76 + (i % 3) * 104 if compact else 640 + (i % 2) * 128
+        top = tools_top + 30 + (i // 3) * 96 if compact else 100 + (i // 2) * 130
+        icon = ElementTree.fromstring((icon_directory / f"{name}.svg").read_text(encoding="utf-8"))
+        if color:
+            icon.set("fill", color)
+        icon.attrib.update({"x": str(center - 23), "y": str(top + 7), "width": "46", "height": "46"})
+        content.append(f'<rect x="{center - 30}" y="{top}" width="60" height="60" rx="13" fill="#f6f8fa"/>')
+        content.append(ElementTree.tostring(icon, encoding="unicode"))
+        content.append(f'<text class="text mono" x="{center}" y="{top + 82}" text-anchor="middle" font-size="12">{label}</text>')
+    return svg(width, height, "Chenhui's Shell profile, projects, and everyday tools", content)
 
 
 def contribution_chart(calendar, compact=False):
@@ -179,7 +182,6 @@ def language_chart(languages, compact=False):
 
 def main():
     cursor = None
-    stars = 0
     languages = Counter()
     while True:
         request = {"query": QUERY, "variables": {"login": "CHENHUI-X", "after": cursor}}
@@ -192,7 +194,6 @@ def main():
         user = response["data"]["user"]
         repositories = user["repositories"]
         for repo in repositories["nodes"]:
-            stars += repo["stargazerCount"]
             if not repo["isFork"]:
                 for language in repo["languages"]["edges"]:
                     languages[language["node"]["name"]] += language["size"]
@@ -210,13 +211,13 @@ def main():
     output.mkdir(exist_ok=True)
     readme = (output.parent / "README.md").read_text(encoding="utf-8")
     lines = re.search(r"```bash\n(.*?)```", readme, re.S)[1].strip().splitlines()
-    (output / "overview.svg").write_text(overview_card(lines, stars, contributions, days[-1]["date"]), encoding="utf-8")
-    (output / "overview-mobile.svg").write_text(overview_card(lines, stars, contributions, days[-1]["date"], compact=True), encoding="utf-8")
+    (output / "overview.svg").write_text(overview_card(lines), encoding="utf-8")
+    (output / "overview-mobile.svg").write_text(overview_card(lines, compact=True), encoding="utf-8")
     (output / "contributions.svg").write_text(contribution_chart(calendar), encoding="utf-8")
     (output / "contributions-mobile.svg").write_text(contribution_chart(calendar, compact=True), encoding="utf-8")
     (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")
     (output / "languages-mobile.svg").write_text(language_chart(languages, compact=True), encoding="utf-8")
-    print(f"Updated profile: {stars:,} stars, {calendar['totalContributions']:,} contributions")
+    print(f"Updated profile: {calendar['totalContributions']:,} contributions")
     print("Language shares:", ", ".join(f"{name} {size / sum(languages.values()):.2%}" for name, size in languages.most_common(5)))
 
 

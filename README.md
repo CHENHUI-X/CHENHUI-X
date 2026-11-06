@@ -11,7 +11,7 @@
 <p align="center">
   <picture>
     <source media="(max-width: 900px)" srcset="./assets/overview-mobile.svg">
-    <img src="./assets/overview.svg" alt="Chenhui's Shell introduction, selected projects, and GitHub statistics in one aligned panel.">
+    <img src="./assets/overview.svg" alt="Chenhui's Shell introduction and selected projects beside Python, Shell, Linux, Docker, nginx, and Markdown tool icons.">
   </picture>
 </p>
 
