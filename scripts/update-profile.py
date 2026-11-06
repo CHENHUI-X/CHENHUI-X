@@ -1,6 +1,7 @@
 """Generate profile images from GitHub data using Python and the GitHub CLI."""
 
 import json
+import re
 import subprocess
 from collections import Counter
 from datetime import date
@@ -41,14 +42,15 @@ COLORS = {
 }
 
 
-def svg(width, height, title, content):
+def svg(width, height, title, content, vertical_padding=0):
+    canvas_height = height + 2 * vertical_padding
     palette = "".join(
         f".level-{i}{{fill:{color}}}" for i, color in enumerate(COLORS["light"])
     )
     dark_palette = "".join(
         f".level-{i}{{fill:{color}}}" for i, color in enumerate(COLORS["dark"])
     )
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-labelledby="title">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{canvas_height}" viewBox="0 0 {width} {canvas_height}" role="img" aria-labelledby="title">
   <title id="title">{escape(title)}</title>
   <style>
     text{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}}
@@ -62,32 +64,50 @@ def svg(width, height, title, content):
       {dark_palette}
     }}
   </style>
-  <rect class="bg" x="0.5" y="0.5" width="{width - 1}" height="{height - 1}" rx="10"/>
-  {''.join(content)}
+  <rect class="bg" x="0.5" y="{vertical_padding + 0.5}" width="{width - 1}" height="{height - 1}" rx="10"/>
+  <g transform="translate(0,{vertical_padding})">{''.join(content)}</g>
 </svg>
 '''
 
 
-def stats_card(stars, contributions, updated, wide=False):
-    rows = [
-        ("Stars on public repos", stars),
-        ("Commits · last 12 months", contributions["totalCommitContributions"]),
-        ("Pull requests · last 12 months", contributions["totalPullRequestContributions"]),
-        ("Issues · last 12 months", contributions["totalIssueContributions"]),
+def profile_card(lines, compact=False):
+    width = 360 if compact else 470
+    height = 86 + len(lines) * 23
+    content = [
+        '<text class="text mono" x="24" y="34" font-size="14" font-weight="600">~$ cat profile.sh</text>',
+        f'<text class="accent mono" x="{width - 24}" y="34" text-anchor="end" font-size="11">bash</text>',
     ]
-    content = ['<text class="text" x="24" y="32" font-size="17" font-weight="600">Chenhui’s GitHub Stats</text>']
-    for i, (label, value) in enumerate(rows):
-        if wide:
-            x = 24 + i * 208
-            content.append(f'<text class="accent" x="{x}" y="78" font-size="30" font-weight="600">{value:,}</text>')
-            content.append(f'<text class="muted" x="{x}" y="103" font-size="12">{label}</text>')
+    for i, line in enumerate(lines):
+        if line.startswith("#"):
+            value = f'<tspan class="muted">{escape(line)}</tspan>'
+        elif "=" in line:
+            name, value = line.split("=", 1)
+            value = f'{escape(name)}=<tspan class="accent">{escape(value)}</tspan>'
         else:
-            y = 62 + i * 27
-            content.append(f'<text class="muted" x="24" y="{y}" font-size="13">{label}</text>')
-            content.append(f'<text class="accent" x="365" y="{y}" text-anchor="end" font-size="15" font-weight="600">{value:,}</text>')
-    width, height = (860, 148) if wide else (390, 194)
+            value = f'<tspan class="accent">{escape(line)}</tspan>'
+        content.append(f'<text class="text mono" x="24" y="{73 + i * 23}" font-size="13" xml:space="preserve">{value}</text>')
+    return svg(width, height, "Chenhui's Shell profile", content, vertical_padding=12)
+
+
+def stats_card(stars, contributions, updated, height):
+    rows = [
+        ("Stars · public repos", stars),
+        ("Commits", contributions["totalCommitContributions"]),
+        ("Pull requests", contributions["totalPullRequestContributions"]),
+        ("Issues", contributions["totalIssueContributions"]),
+    ]
+    content = [
+        '<text class="text" x="24" y="36" font-size="17" font-weight="600">Chenhui’s GitHub Stats</text>',
+        '<text class="muted mono" x="24" y="58" font-size="11">CHENHUI-X / activity</text>',
+    ]
+    for i, (label, value) in enumerate(rows):
+        x = 24 + (i % 2) * 164
+        y = 128 + (i // 2) * 130
+        content.append(f'<text class="accent" x="{x}" y="{y}" font-size="34" font-weight="600">{value:,}</text>')
+        content.append(f'<text class="muted" x="{x}" y="{y + 26}" font-size="12">{label}</text>')
+    content.append(f'<text class="muted" x="24" y="{height - 42}" font-size="11">Commits, PRs, issues: last 12 months</text>')
     content.append(f'<text class="muted" x="24" y="{height - 20}" font-size="11">Updated {updated} · GitHub data</text>')
-    return svg(width, height, "Chenhui's GitHub statistics", content)
+    return svg(350, height, "Chenhui's GitHub statistics", content, vertical_padding=12)
 
 
 def contribution_chart(calendar, compact=False):
@@ -136,18 +156,17 @@ def language_chart(languages, compact=False):
     if other:
         rows.append(("Other", other))
     width = 430 if compact else 860
-    height = 102 + len(rows) * (54 if compact else 31)
+    height = 110 + len(rows) * (64 if compact else 42)
     content = [
-        '<text class="text" x="24" y="32" font-size="17" font-weight="600">Code languages</text>',
-        '<text class="muted" x="24" y="54" font-size="11">Public, non-fork repositories · by code size</text>',
+        '<text class="muted" x="24" y="36" font-size="12">Public, non-fork repositories · by code size</text>',
     ]
     for i, (name, size) in enumerate(rows):
         percent = size / total * 100
-        y = 86 + i * (54 if compact else 31)
-        content.append(f'<text class="text mono" x="24" y="{y}" font-size="13">{escape(name)}</text>')
-        content.append(f'<text class="muted mono" x="{width - 24}" y="{y}" text-anchor="end" font-size="12">{percent:.2f} %</text>')
-        left, top = (24, y + 10) if compact else (245, y - 11)
-        step = 14 if compact else 17
+        y = 82 + i * (64 if compact else 42)
+        content.append(f'<text class="text mono" x="24" y="{y}" font-size="14">{escape(name)}</text>')
+        content.append(f'<text class="muted mono" x="{width - 24}" y="{y}" text-anchor="end" font-size="13">{percent:.2f} %</text>')
+        left, top = (24, y + 14) if compact else (240, y - 11)
+        step = 14 if compact else 18
         for segment in range(27):
             color = "accent" if (segment + 0.5) / 27 <= size / total else "level-0"
             content.append(f'<rect class="{color}" x="{left + segment * step}" y="{top}" width="{step - 2}" height="12" rx="1"/>')
@@ -186,8 +205,11 @@ def main():
 
     output = Path(__file__).resolve().parents[1] / "assets"
     output.mkdir(exist_ok=True)
-    (output / "stats.svg").write_text(stats_card(stars, contributions, days[-1]["date"]), encoding="utf-8")
-    (output / "stats-wide.svg").write_text(stats_card(stars, contributions, days[-1]["date"], wide=True), encoding="utf-8")
+    readme = (output.parent / "README.md").read_text(encoding="utf-8")
+    lines = re.search(r"```bash\n(.*?)```", readme, re.S)[1].strip().splitlines()
+    (output / "profile.svg").write_text(profile_card(lines), encoding="utf-8")
+    (output / "profile-mobile.svg").write_text(profile_card(lines, compact=True), encoding="utf-8")
+    (output / "stats.svg").write_text(stats_card(stars, contributions, days[-1]["date"], 86 + len(lines) * 23), encoding="utf-8")
     (output / "contributions.svg").write_text(contribution_chart(calendar), encoding="utf-8")
     (output / "contributions-mobile.svg").write_text(contribution_chart(calendar, compact=True), encoding="utf-8")
     (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")

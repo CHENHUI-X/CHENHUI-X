@@ -1,8 +1,24 @@
-# Chenhui
+<h1 align="center">Chenhui</h1>
 
-<samp>LLM / Algorithms / Linux / Homelab</samp>
+<p align="center"><samp>LLM / Algorithms / Linux / Homelab</samp></p>
 
-### ~$ cat profile.sh
+<p align="center">
+  <a href="https://xuchenhui.cc">Website</a> ·
+  <a href="https://space.bilibili.com/294132471">Bilibili</a> ·
+  <a href="https://github.com/CHENHUI-X?tab=repositories">Repositories</a>
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px)" srcset="./assets/profile-mobile.svg">
+    <img src="./assets/profile.svg" alt="Chenhui's profile.sh: Python, Shell, Debian, Ubuntu, LLM, algorithms, homelab, and networking.">
+  </picture>
+  &nbsp;
+  <img src="./assets/stats.svg" alt="Chenhui's GitHub statistics: stars on public repositories, and commits, pull requests, and issues from the last twelve months.">
+</p>
+
+<details>
+<summary>View profile.sh</summary>
 
 ```bash
 #!/usr/bin/env bash
@@ -21,33 +37,61 @@ interests=(ML LLM Algorithms
 website="https://xuchenhui.cc"
 ```
 
-[Website](https://xuchenhui.cc) · [Bilibili](https://space.bilibili.com/294132471) · [Repositories](https://github.com/CHENHUI-X?tab=repositories)
-
-### Selected work
-
-- **[dsh-client-ui-dashboard](https://github.com/CHENHUI-X/dsh-client-ui-dashboard)** — DeepSeek Harness 实时指标面板
-- **[My-lecture-slides-and-code](https://github.com/CHENHUI-X/My-lecture-slides-and-code)** — B站课程 PPT 与配套代码
-- **[Deep-Learning-Classic-Papers](https://github.com/CHENHUI-X/Deep-Learning-Classic-Papers)** — 深度学习经典论文与笔记
-- **[ImproveTransweather](https://github.com/CHENHUI-X/ImproveTransweather)** — 硕士毕业项目
-
-### Activity
-
-<picture>
-  <source media="(max-width: 600px)" srcset="./assets/stats.svg">
-  <img src="./assets/stats-wide.svg" width="860" alt="Chenhui's GitHub statistics: stars on public repositories, and commits, pull requests, and issues from the last twelve months.">
-</picture>
+</details>
 
 <br>
+
+<h3 align="center">Selected work</h3>
+
+<table align="center" width="100%">
+  <tr>
+    <td align="center" width="50%">
+      <br>
+      <strong><a href="https://github.com/CHENHUI-X/dsh-client-ui-dashboard">Harness Dashboard</a></strong>
+      <p>DeepSeek Harness 实时指标面板</p>
+      <br>
+    </td>
+    <td align="center" width="50%">
+      <br>
+      <strong><a href="https://github.com/CHENHUI-X/My-lecture-slides-and-code">Lecture Slides &amp; Code</a></strong>
+      <p>B站课程 PPT 与配套代码</p>
+      <br>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <br>
+      <strong><a href="https://github.com/CHENHUI-X/Deep-Learning-Classic-Papers">Deep Learning Papers</a></strong>
+      <p>深度学习经典论文与笔记</p>
+      <br>
+    </td>
+    <td align="center" width="50%">
+      <br>
+      <strong><a href="https://github.com/CHENHUI-X/ImproveTransweather">Transweather</a></strong>
+      <p>硕士毕业项目</p>
+      <br>
+    </td>
+  </tr>
+</table>
+
 <br>
 
-<picture>
-  <source media="(max-width: 600px)" srcset="./assets/contributions-mobile.svg">
-  <img src="./assets/contributions.svg" width="860" alt="Chenhui's contribution calendar for the last year, using an ice-blue palette. The compact layout shows the same year in two rows.">
-</picture>
+<h3 align="center">Contributions</h3>
 
-### Code languages
+<p align="center">
+  <picture>
+    <source media="(max-width: 900px)" srcset="./assets/contributions-mobile.svg">
+    <img src="./assets/contributions.svg" alt="Chenhui's contribution calendar for the last year, using an ice-blue palette. The compact layout shows the same year in two rows.">
+  </picture>
+</p>
 
-<picture>
-  <source media="(max-width: 600px)" srcset="./assets/languages-mobile.svg">
-  <img src="./assets/languages.svg" width="860" alt="Code language distribution across Chenhui's public, non-fork repositories, measured by code size.">
-</picture>
+<br>
+
+<h3 align="center">Code languages</h3>
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 900px)" srcset="./assets/languages-mobile.svg">
+    <img src="./assets/languages.svg" alt="Code language distribution across Chenhui's public, non-fork repositories, measured by code size.">
+  </picture>
+</p>
