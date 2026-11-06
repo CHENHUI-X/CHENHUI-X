@@ -209,10 +209,22 @@ def main():
 
     output = Path(__file__).resolve().parents[1] / "assets"
     output.mkdir(exist_ok=True)
-    readme = (output.parent / "README.md").read_text(encoding="utf-8")
-    lines = re.search(r"```bash\n(.*?)```", readme, re.S)[1].strip().splitlines()
+    lines = (output.parent / "profile.sh").read_text(encoding="utf-8").strip().splitlines()
     (output / "overview.svg").write_text(overview_card(lines), encoding="utf-8")
     (output / "overview-mobile.svg").write_text(overview_card(lines, compact=True), encoding="utf-8")
+    # Cache the original card so transient service failures do not break the profile.
+    for theme, filename in [("default", "github-stats.svg"), ("dark", "github-stats-dark.svg")]:
+        url = f"https://github-readme-stats-ouuan.vercel.app/api?username=CHENHUI-X&show_icons=true&theme={theme}"
+        card = subprocess.check_output([
+            "curl", "--fail", "--silent", "--show-error", "--location",
+            "--retry", "2", "--retry-all-errors", "--connect-timeout", "8",
+            "--max-time", "18", url,
+        ], timeout=65)
+        root = ElementTree.fromstring(card)
+        text = "".join(root.itertext())
+        if "CHENHUI" not in text.upper() or "Total Stars Earned:" not in text:
+            raise ValueError("GitHub Readme Stats did not return this profile's card")
+        (output / filename).write_bytes(card)
     (output / "contributions.svg").write_text(contribution_chart(calendar), encoding="utf-8")
     (output / "contributions-mobile.svg").write_text(contribution_chart(calendar, compact=True), encoding="utf-8")
     (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")
