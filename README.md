@@ -11,10 +11,17 @@
 <p align="center">
   <picture>
     <source media="(max-width: 600px)" srcset="./assets/profile-mobile.svg">
-    <img src="./assets/profile.svg" alt="Chenhui's profile.sh: Python, Shell, Debian, Ubuntu, LLM, algorithms, homelab, and networking.">
+    <img src="./assets/profile.svg" align="top" alt="Chenhui's profile.sh: technical interests and selected projects in one Shell introduction.">
   </picture>
   &nbsp;
-  <img src="./assets/stats.svg" alt="Chenhui's GitHub statistics: stars on public repositories, and commits, pull requests, and issues from the last twelve months.">
+  <img src="./assets/stats.svg" align="top" alt="Chenhui's GitHub statistics: stars on public repositories, and commits, pull requests, and issues from the last twelve months.">
+</p>
+
+<p align="center">
+  <a href="https://github.com/CHENHUI-X/dsh-client-ui-dashboard" title="DeepSeek Harness 实时指标面板">Harness Dashboard</a> ·
+  <a href="https://github.com/CHENHUI-X/My-lecture-slides-and-code" title="B站课程 PPT 与配套代码">Lecture Slides &amp; Code</a> ·
+  <a href="https://github.com/CHENHUI-X/Deep-Learning-Classic-Papers" title="深度学习经典论文与笔记">Deep Learning Papers</a> ·
+  <a href="https://github.com/CHENHUI-X/ImproveTransweather" title="硕士毕业项目">Transweather</a>
 </p>
 
 <details>
@@ -35,44 +42,17 @@ network=(Xray sing-box Clash
 interests=(ML LLM Algorithms
            Homelab Networking)
 website="https://xuchenhui.cc"
+
+# Selected work
+projects=(
+  "dsh-client-ui-dashboard"
+  "My-lecture-slides-and-code"
+  "Deep-Learning-Classic-Papers"
+  "ImproveTransweather"
+)
 ```
 
 </details>
-
-<br>
-
-<h3 align="center">Selected work</h3>
-
-<table align="center" width="100%">
-  <tr>
-    <td align="center" width="50%">
-      <br>
-      <strong><a href="https://github.com/CHENHUI-X/dsh-client-ui-dashboard">Harness Dashboard</a></strong>
-      <p>DeepSeek Harness 实时指标面板</p>
-      <br>
-    </td>
-    <td align="center" width="50%">
-      <br>
-      <strong><a href="https://github.com/CHENHUI-X/My-lecture-slides-and-code">Lecture Slides &amp; Code</a></strong>
-      <p>B站课程 PPT 与配套代码</p>
-      <br>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="50%">
-      <br>
-      <strong><a href="https://github.com/CHENHUI-X/Deep-Learning-Classic-Papers">Deep Learning Papers</a></strong>
-      <p>深度学习经典论文与笔记</p>
-      <br>
-    </td>
-    <td align="center" width="50%">
-      <br>
-      <strong><a href="https://github.com/CHENHUI-X/ImproveTransweather">Transweather</a></strong>
-      <p>硕士毕业项目</p>
-      <br>
-    </td>
-  </tr>
-</table>
 
 <br>
 

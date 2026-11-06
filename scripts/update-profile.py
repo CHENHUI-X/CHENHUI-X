@@ -209,7 +209,8 @@ def main():
     lines = re.search(r"```bash\n(.*?)```", readme, re.S)[1].strip().splitlines()
     (output / "profile.svg").write_text(profile_card(lines), encoding="utf-8")
     (output / "profile-mobile.svg").write_text(profile_card(lines, compact=True), encoding="utf-8")
-    (output / "stats.svg").write_text(stats_card(stars, contributions, days[-1]["date"], 86 + len(lines) * 23), encoding="utf-8")
+    # Project entries can grow without resizing the adjacent statistics card.
+    (output / "stats.svg").write_text(stats_card(stars, contributions, days[-1]["date"], 408), encoding="utf-8")
     (output / "contributions.svg").write_text(contribution_chart(calendar), encoding="utf-8")
     (output / "contributions-mobile.svg").write_text(contribution_chart(calendar, compact=True), encoding="utf-8")
     (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")
