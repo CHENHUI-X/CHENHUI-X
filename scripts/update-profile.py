@@ -3,7 +3,6 @@
 import json
 import subprocess
 from collections import Counter
-from datetime import date
 from html import escape
 from pathlib import Path
 from xml.etree import ElementTree
@@ -21,17 +20,10 @@ query($login: String!, $after: String) {
         }
       }
     }
-    contributionsCollection {
-      contributionCalendar {
-        totalContributions
-        weeks { contributionDays { date contributionCount contributionLevel } }
-      }
-    }
   }
 }
 """
 
-LEVELS = ["NONE", "FIRST_QUARTILE", "SECOND_QUARTILE", "THIRD_QUARTILE", "FOURTH_QUARTILE"]
 COLORS = {
     "light": ["#eff2f5", "#d5e9ff", "#9acbff", "#58a6ff", "#0969da"],
     "dark": ["#161b22", "#122c46", "#1b4b78", "#2f81c8", "#58a6ff"],
@@ -112,45 +104,6 @@ def profile_row(intro, stats, compact=False):
     return f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img"><title>Chenhui: Shell introduction and original GitHub Readme Stats</title>{"".join(panels)}</svg>\n'
 
 
-def contribution_chart(calendar, compact=False):
-    weeks = calendar["weeks"]
-    width, height = (430, 354) if compact else (860, 214)
-    step = 13 if compact else 14
-    left = 48 if compact else 62
-    columns = 27 if compact else len(weeks)
-    total = calendar["totalContributions"]
-    content = [f'<text class="text" x="24" y="31" font-size="16" font-weight="600">{total:,} contributions in the last year</text>']
-    for start in range(0, len(weeks), columns):
-        top = 80 + (start // columns) * 130
-        previous_month = None
-        for column, week in enumerate(weeks[start:start + columns]):
-            days = week["contributionDays"]
-            first = date.fromisoformat(days[0]["date"])
-            month = next(
-                (date.fromisoformat(day["date"]) for day in days if day["date"].endswith("-01")),
-                first,
-            )
-            x = left + column * step
-            if month.month != previous_month:
-                content.append(f'<text class="muted" x="{x}" y="{top - 14}" font-size="11">{month:%b}</text>')
-                previous_month = month.month
-            for day in days:
-                weekday = (date.fromisoformat(day["date"]).weekday() + 1) % 7
-                y = top + weekday * step
-                level = LEVELS.index(day["contributionLevel"])
-                count = day["contributionCount"]
-                content.append(f'<rect class="level-{level}" x="{x}" y="{y}" width="{step - 3}" height="{step - 3}" rx="2"><title>{day["date"]}: {count} contributions</title></rect>')
-        for weekday, label in [(1, "Mon"), (3, "Wed"), (5, "Fri")]:
-            content.append(f'<text class="muted" x="{left - 10}" y="{top + weekday * step + 9}" text-anchor="end" font-size="10">{label}</text>')
-    footer = height - 20
-    content.append(f'<text class="muted" x="24" y="{footer}" font-size="10">{weeks[0]["contributionDays"][0]["date"]} — {weeks[-1]["contributionDays"][-1]["date"]}</text>')
-    content.append(f'<text class="muted" x="{width - 160}" y="{footer}" font-size="10">Less</text>')
-    for i in range(5):
-        content.append(f'<rect class="level-{i}" x="{width - 128 + 14 * i}" y="{footer - 10}" width="10" height="10" rx="2"/>')
-    content.append(f'<text class="muted" x="{width - 50}" y="{footer}" font-size="10">More</text>')
-    return svg(width, height, f"{total} GitHub contributions in the last year", content)
-
-
 def language_chart(languages, compact=False):
     total = sum(languages.values())
     rows = languages.most_common(5)
@@ -197,12 +150,6 @@ def main():
             break
         cursor = repositories["pageInfo"]["endCursor"]
 
-    contributions = user["contributionsCollection"]
-    calendar = contributions["contributionCalendar"]
-    days = [day for week in calendar["weeks"] for day in week["contributionDays"]]
-    if not days or sum(day["contributionCount"] for day in days) != calendar["totalContributions"]:
-        raise ValueError("GitHub contribution calendar is incomplete")
-
     output = Path(__file__).resolve().parents[1] / "assets"
     output.mkdir(exist_ok=True)
     lines = (output.parent / "profile.sh").read_text(encoding="utf-8").strip().splitlines()
@@ -223,11 +170,9 @@ def main():
         for compact in [False, True]:
             suffix = ("-mobile" if compact else "") + ("-dark" if theme == "dark" else "")
             (output / f"profile-row{suffix}.svg").write_text(profile_row(intro, card, compact=compact), encoding="utf-8")
-    (output / "contributions.svg").write_text(contribution_chart(calendar), encoding="utf-8")
-    (output / "contributions-mobile.svg").write_text(contribution_chart(calendar, compact=True), encoding="utf-8")
     (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")
     (output / "languages-mobile.svg").write_text(language_chart(languages, compact=True), encoding="utf-8")
-    print(f"Updated profile: {calendar['totalContributions']:,} contributions")
+    print("Updated profile cards")
     print("Language shares:", ", ".join(f"{name} {size / sum(languages.values()):.2%}" for name, size in languages.most_common(5)))
 
 

@@ -9,23 +9,19 @@
 </p>
 
 <p align="center">
-  <picture>
-    <source media="(max-width: 900px) and (prefers-color-scheme: dark)" srcset="./assets/profile-row-mobile-dark.svg">
-    <source media="(max-width: 900px)" srcset="./assets/profile-row-mobile.svg">
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/profile-row-dark.svg">
-    <img src="./assets/profile-row.svg" alt="Chenhui's compact Shell introduction and original GitHub Readme Stats card.">
-  </picture>
-</p>
-
-<br>
-
-<h3 align="center">Contributions</h3>
-
-<p align="center">
-  <picture>
-    <source media="(max-width: 900px)" srcset="./assets/contributions-mobile.svg">
-    <img src="./assets/contributions.svg" alt="Chenhui's contribution calendar for the last year, using an ice-blue palette. The compact layout shows the same year in two rows.">
-  </picture>
+  <!-- GitHub rewrites color-scheme source media, so keep theme and width selection separate. -->
+  <a href="./assets/profile-row.svg#gh-light-mode-only">
+    <picture>
+      <source media="(max-width: 600px) and (pointer: coarse)" srcset="./assets/profile-row-mobile.svg">
+      <img src="./assets/profile-row.svg" alt="Chenhui's compact Shell introduction and original GitHub Readme Stats card.">
+    </picture>
+  </a>
+  <a href="./assets/profile-row-dark.svg#gh-dark-mode-only">
+    <picture>
+      <source media="(max-width: 600px) and (pointer: coarse)" srcset="./assets/profile-row-mobile-dark.svg">
+      <img src="./assets/profile-row-dark.svg" alt="Chenhui's compact Shell introduction and original GitHub Readme Stats card.">
+    </picture>
+  </a>
 </p>
 
 <br>
