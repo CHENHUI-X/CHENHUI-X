@@ -173,7 +173,7 @@ def main():
         for compact in [False, True]:
             suffix = ("-mobile" if compact else "") + ("-dark" if theme == "dark" else "")
             (output / f"profile-row{suffix}.svg").write_text(profile_row(intro, card, compact=compact), encoding="utf-8")
-    (output / "languages.svg").write_text(language_chart(languages), encoding="utf-8")
+    (output / "languages-compact.svg").write_text(language_chart(languages), encoding="utf-8")
     (output / "languages-mobile.svg").write_text(language_chart(languages, compact=True), encoding="utf-8")
     print("Updated profile cards")
     print("Language shares:", ", ".join(f"{name} {size / sum(languages.values()):.2%}" for name, size in languages.most_common(5)))

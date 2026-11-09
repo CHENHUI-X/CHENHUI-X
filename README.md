@@ -31,6 +31,6 @@
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (pointer: coarse)" srcset="./assets/languages-mobile.svg">
-    <img src="./assets/languages.svg" alt="Code language distribution across Chenhui's public, non-fork repositories, measured by code size.">
+    <img src="./assets/languages-compact.svg" alt="Code language distribution across Chenhui's public, non-fork repositories, measured by code size.">
   </picture>
 </p>
