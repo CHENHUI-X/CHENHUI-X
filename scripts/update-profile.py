@@ -111,21 +111,24 @@ def language_chart(languages, compact=False):
     if other:
         rows.append(("Other", other))
     width = 430 if compact else 860
-    height = 110 + len(rows) * (64 if compact else 42)
+    height = 110 + len(rows) * 64 if compact else CARD_HEIGHT
+    header_y = 36 if compact else 24
     content = [
-        '<text class="muted" x="24" y="36" font-size="12">Public, non-fork repositories · by code size</text>',
+        f'<text class="muted" x="24" y="{header_y}" font-size="12">Public, non-fork repositories · by code size</text>',
     ]
     for i, (name, size) in enumerate(rows):
         percent = size / total * 100
-        y = 82 + i * (64 if compact else 42)
+        y = 82 + i * 64 if compact else 50 + i * 18
         content.append(f'<text class="text mono" x="24" y="{y}" font-size="14">{escape(name)}</text>')
         content.append(f'<text class="muted mono" x="{width - 24}" y="{y}" text-anchor="end" font-size="13">{percent:.2f} %</text>')
-        left, top = (24, y + 14) if compact else (240, y - 11)
+        left, top = (24, y + 14) if compact else (240, y - 8)
         step = 14 if compact else 18
+        bar_height = 12 if compact else 10
         for segment in range(27):
             color = "accent" if (segment + 0.5) / 27 <= size / total else "level-0"
-            content.append(f'<rect class="{color}" x="{left + segment * step}" y="{top}" width="{step - 2}" height="12" rx="1"/>')
-    content.append(f'<text class="muted" x="24" y="{height - 18}" font-size="10">GitHub Linguist · language share across my projects</text>')
+            content.append(f'<rect class="{color}" x="{left + segment * step}" y="{top}" width="{step - 2}" height="{bar_height}" rx="1"/>')
+    footer_y = height - (18 if compact else 12)
+    content.append(f'<text class="muted" x="24" y="{footer_y}" font-size="10">GitHub Linguist · language share across my projects</text>')
     return svg(width, height, "Code language distribution by size in public, non-fork repositories", content)
 
 
