@@ -8,7 +8,7 @@
         role="img"
         aria-labelledby="descId"
       >
-        <title id="titleId">CHENHUI's GitHub Stats, Rank: B</title>
+        <title id="titleId">CHENHUI&#39;s GitHub Stats, Rank: B</title>
         <desc id="descId">Total Stars Earned: 927, Total Commits  (last year) : 80, Total PRs: 4, Total Issues: 8, Contributed to (last year): 2</desc>
         <style>
           .header {
@@ -73,11 +73,12 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 135.8152581013926;
+        stroke-dashoffset: 135.81839239115106;
       }
     }
   
   
+          
 
           
       /* Animations */
@@ -102,9 +103,15 @@
         </style>
 
         
+        <defs>
+          
+          
+        </defs>
+        
 
         <rect
           data-testid="card-bg"
+          class="card-bg"
           x="0.5"
           y="0.5"
           rx="4.5"
@@ -126,7 +133,7 @@
         y="0"
         class="header"
         data-testid="header"
-      >CHENHUI's GitHub Stats</text>
+      >CHENHUI&#39;s GitHub Stats</text>
     </g>
       </g>
     
@@ -159,7 +166,7 @@
       <text class="stat  bold" x="25" y="12.5">Total Stars Earned:</text>
       <text
         class="stat  bold"
-        x="219.01"
+        x="224.01"
         y="12.5"
         data-testid="stars"
       >927</text>
@@ -174,7 +181,7 @@
       <text class="stat  bold" x="25" y="12.5">Total Commits (last year):</text>
       <text
         class="stat  bold"
-        x="219.01"
+        x="224.01"
         y="12.5"
         data-testid="commits"
       >80</text>
@@ -189,7 +196,7 @@
       <text class="stat  bold" x="25" y="12.5">Total PRs:</text>
       <text
         class="stat  bold"
-        x="219.01"
+        x="224.01"
         y="12.5"
         data-testid="prs"
       >4</text>
@@ -204,7 +211,7 @@
       <text class="stat  bold" x="25" y="12.5">Total Issues:</text>
       <text
         class="stat  bold"
-        x="219.01"
+        x="224.01"
         y="12.5"
         data-testid="issues"
       >8</text>
@@ -219,7 +226,7 @@
       <text class="stat  bold" x="25" y="12.5">Contributed to (last year):</text>
       <text
         class="stat  bold"
-        x="219.01"
+        x="224.01"
         y="12.5"
         data-testid="contribs"
       >2</text>
